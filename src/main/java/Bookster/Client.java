@@ -3,7 +3,7 @@ package Bookster;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Client implements Unique {
+public final class Client implements Unique {
     /**
      * Static atomic that holds increasing IDs for clients.
      */

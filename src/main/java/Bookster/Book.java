@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Description of a book.
  */
-public class Book implements Unique {
+public final class Book implements Unique {
     /**
      * Static atomic that holds increasing IDs for authors.
      */

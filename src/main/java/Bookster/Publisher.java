@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * All books must have an associated publisher.
  */
-public class Publisher implements Unique {
+public final class Publisher implements Unique {
     /**
      * Static atomic that holds increasing IDs for publishers.
      */
