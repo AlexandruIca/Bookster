@@ -10,7 +10,7 @@ import java.util.Vector;
 public class ClientTest {
     private static final ArrayList<String> firstNames = new ArrayList<>();
     private static final ArrayList<String> lastNames = new ArrayList<>();
-    private static final ArrayList<Author> clients = new ArrayList<>();
+    private static final ArrayList<Client> clients = new ArrayList<>();
 
     @BeforeAll
     static void setup() {
@@ -35,7 +35,7 @@ public class ClientTest {
         var random = new Random();
 
         for (final var name : firstNames) {
-            clients.add(new Author(
+            clients.add(new Client(
                     name,
                     lastNames.get(random.nextInt(lastNames.size())),
                     "1986-06-24"
@@ -46,15 +46,15 @@ public class ClientTest {
     @Test
     public void testUniqueID() {
         var ids = new ArrayList<Long>();
-        clients.stream().map(Author::getID).forEach(ids::add);
+        clients.stream().map(Client::getID).forEach(ids::add);
         assert ids.stream().distinct().count() == firstNames.size();
     }
 
     @Test
     public void testThreadSafety() {
-        var temp = new Vector<Author>();
-        clients.parallelStream().forEach(author -> temp.add(new Author(author.getFirstName(),
-                author.getLastName(), "2001-09-17")));
+        var temp = new Vector<Client>();
+        clients.parallelStream().forEach(client -> temp.add(new Client(client.getFirstName(),
+                client.getLastName(), "2001-09-17")));
         assert temp.size() == clients.size();
     }
 }
