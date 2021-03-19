@@ -10,7 +10,7 @@ public class Client implements Unique {
     private static AtomicLong clientID = new AtomicLong(0);
 
     /**
-     * @return a new unique ID for authors, use this when creating a new client.
+     * @return a new unique ID for clients, use this when creating a new client.
      * @apiNote Method is completely thread-safe.
      */
     private static Long newID() {

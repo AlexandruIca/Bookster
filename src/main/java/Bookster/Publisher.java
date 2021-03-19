@@ -12,7 +12,7 @@ public class Publisher implements Unique {
     private static AtomicLong publisherID = new AtomicLong(0);
 
     /**
-     * @return a new unique ID for authors, use this when creating a new publisher.
+     * @return a new unique ID for publishers, use this when creating a new publisher.
      * @apiNote Method is completely thread-safe.
      */
     private static Long newID() {
