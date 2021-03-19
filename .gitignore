@@ -1,0 +1,21 @@
+# Java
+
+*.class
+*.war
+*.ear
+hs_err_pid*
+crash-report-*
+build/
+
+# Intellij
+
+.idea/
+*.ipr
+*.iws
+*.iml
+
+# Gradle
+
+/local.properties
+.gradle/
+gradle-app.setting
