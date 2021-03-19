@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Publisher implements Unique {
     /**
-     * Static atomic that holds increasing IDs for authors.
+     * Static atomic that holds increasing IDs for publishers.
      */
     private static AtomicLong publisherID = new AtomicLong(0);
 
     /**
-     * @return a new unique ID for authors, use this when creating a new author.
+     * @return a new unique ID for authors, use this when creating a new publisher.
      * @apiNote Method is completely thread-safe.
      */
     private static Long newID() {
