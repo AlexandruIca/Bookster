@@ -27,4 +27,27 @@ public class TransactionTest {
         });
         assert transactions.size() == numIterations;
     }
+
+    @Test
+    public void testToString() {
+        final var date = "2012-12-12";
+        final var author = new Author("A", "B", date);
+        final var publisher = new Publisher("C");
+        final var book = new Book("D", BookGenre.BIOGRAPHY, 9.99, date, author, publisher);
+        final var client = new Client("E", "F", date);
+        final var transaction = new Transaction(book, client, date, 1);
+        final String expected = new StringBuilder()
+                .append('(')
+                .append(transaction.getID())
+                .append(", ")
+                .append(book.toString())
+                .append(", ")
+                .append(client.toString())
+                .append(", 1, ")
+                .append(date)
+                .append(')')
+                .toString();
+
+        assert transaction.toString().equals(expected);
+    }
 }
