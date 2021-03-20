@@ -16,6 +16,7 @@ public enum BookService {
 
     private HashMap<Long, Author> authors = new HashMap<>();
     private HashMap<Long, Publisher> publishers = new HashMap<>();
+    private HashMap<Long, Client> clients = new HashMap<>();
 
     private BookService() {
     }
@@ -38,11 +39,20 @@ public enum BookService {
         return publishers.entrySet().stream();
     }
 
+    /**
+     * @return handle to {@link #clients}
+     */
+    public Stream<Map.Entry<Long, Client>> clientStream() {
+        return clients.entrySet().stream();
+    }
+
     private void addObject(Unique obj) throws Exception {
         if (obj instanceof Author) {
             authors.put(obj.getID(), (Author) obj);
         } else if (obj instanceof Publisher) {
             publishers.put(obj.getID(), (Publisher) obj);
+        } else if (obj instanceof Client) {
+            clients.put(obj.getID(), (Client) obj);
         } else {
             throw new Exception("Tried to add an object that is not of any type from package " +
                     "Bookster!");
@@ -54,6 +64,8 @@ public enum BookService {
             return authors.containsKey(obj.getID());
         } else if (obj instanceof Publisher) {
             return publishers.containsKey(obj.getID());
+        } else if (obj instanceof Client) {
+            return clients.containsKey(obj.getID());
         } else {
             throw new Exception("Tried to check for existence of an object that is not of any " +
                     "type from package Bookster!");
