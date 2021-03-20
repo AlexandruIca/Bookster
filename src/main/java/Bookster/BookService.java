@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Implements all actions that can be performed in the entire app.
  *
- * @implNote This is a singleton implemented using an enum to assure thread safety. Also, it just
+ * @note This is a singleton implemented using an enum to assure thread safety. Also, it just
  * seems
  * cleaner than any other solution I've seen
  */
@@ -28,7 +28,7 @@ public enum BookService {
     /**
      * @param author new author to add to the 'database'.
      * @return true if {@code author} was added successfully, false otherwise.
-     * @apiNote false may be returned if the author is already present, or if any exception
+     * @note false may be returned if the author is already present, or if any exception
      * occurs when trying to add the author to {@link #authors}.
      */
     public boolean registerAuthor(Author author) {
@@ -45,6 +45,9 @@ public enum BookService {
         return true;
     }
 
+    /**
+     * @return handle to {@link #authors}, giving you maximum flexibility.
+     */
     public Stream<Map.Entry<Long, Author>> authorStream() {
         return authors.entrySet().stream();
     }
