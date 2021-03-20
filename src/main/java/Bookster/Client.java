@@ -45,4 +45,19 @@ public final class Client implements Unique {
     public Long getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append('(')
+                .append(this.id)
+                .append(", ")
+                .append(this.firstName)
+                .append(' ')
+                .append(this.lastName)
+                .append(", ")
+                .append(this.dateBorn)
+                .append(')')
+                .toString();
+    }
 }

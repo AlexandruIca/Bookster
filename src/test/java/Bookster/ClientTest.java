@@ -57,5 +57,11 @@ public class ClientTest {
                 client.getLastName(), "2001-09-17")));
         assert temp.size() == clients.size();
     }
+
+    @Test
+    public void testToString() {
+        var temp = new Client("A", "B", "1998-08-08");
+        assert temp.toString().equals("(" + temp.getID() + ", A B, 1998-08-08)");
+    }
 }
 
