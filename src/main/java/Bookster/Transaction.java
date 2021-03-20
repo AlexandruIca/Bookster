@@ -16,7 +16,6 @@ public final class Transaction implements Unique {
      * Get the current transaction ID, then be ready for the next one.
      *
      * @return the current transaction ID.
-     *
      * @apiNote Thread-safe.
      */
     private static Long newID() {
@@ -27,12 +26,14 @@ public final class Transaction implements Unique {
     private final Book book;
     private final Client client;
     private final LocalDate date;
+    private final int quantity;
 
-    public Transaction(Book book, Client client, String date) {
+    public Transaction(Book book, Client client, String date, int quantity) {
         this.id = newID();
         this.book = book;
         this.client = client;
         this.date = LocalDate.parse(date);
+        this.quantity = quantity;
     }
 
     public Book getBook() {
@@ -45,6 +46,10 @@ public final class Transaction implements Unique {
 
     public LocalDate getDate() {
         return this.date;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
     }
 
     @Override

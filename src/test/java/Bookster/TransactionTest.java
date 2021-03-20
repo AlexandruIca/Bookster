@@ -14,7 +14,7 @@ public class TransactionTest {
 
     @Test
     public void testTransactionInterface() {
-        final var transact = new Transaction(this.book, this.client, "2020-07-06");
+        final var transact = new Transaction(this.book, this.client, "2020-07-06", 1);
         assert transact.getBook().getAuthors().size() == 1;
     }
 
@@ -23,7 +23,7 @@ public class TransactionTest {
         final int numIterations = 100;
         var transactions = new Vector<Transaction>();
         IntStream.range(0, numIterations).parallel().forEach(i -> {
-            transactions.add(new Transaction(this.book, this.client, "2019-08-07"));
+            transactions.add(new Transaction(this.book, this.client, "2019-08-07", 1));
         });
         assert transactions.size() == numIterations;
     }
