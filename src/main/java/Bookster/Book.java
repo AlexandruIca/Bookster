@@ -3,6 +3,7 @@ package Bookster;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * Description of a book.
@@ -76,5 +77,34 @@ public final class Book implements Unique {
     @Override
     public Long getID() {
         return this.id;
+    }
+
+    @Override
+    public String toString() {
+        var authorsStr = new StringBuilder().append('[');
+
+        authorsStr.append(this.authors.stream()
+                .map(Author::toString)
+                .collect(Collectors.joining(", ")));
+
+        authorsStr.append(']');
+
+        return new StringBuilder()
+                .append('(')
+                .append(this.id)
+                .append(", ")
+                .append(this.title)
+                .append(", ")
+                .append(this.genre.toString())
+                .append(", ")
+                .append(this.price)
+                .append(", ")
+                .append(this.datePublished)
+                .append(", ")
+                .append(authorsStr)
+                .append(", ")
+                .append(this.publisher.toString())
+                .append(')')
+                .toString();
     }
 }

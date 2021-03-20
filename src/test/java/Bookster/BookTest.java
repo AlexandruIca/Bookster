@@ -49,4 +49,18 @@ public class BookTest {
 
         assert !books.isEmpty();
     }
+
+    @Test
+    public void testToString() {
+        final var date = "2012-12-12";
+        final var author = new Author("A", "B", date);
+        final var author2 = new Author("D", "E", date);
+        final var publisher = new Publisher("C");
+        final var book = new Book("X", BookGenre.BIOGRAPHY, 9.99, date, author, publisher);
+        book.addAuthor(author2);
+
+        assert book.toString().equals("(" + book.getID() + ", X, BIOGRAPHY, 9.99, 2012-12-12, ["
+                + author.toString() + ", " + author2.toString() + "], " + publisher.toString() +
+                ")");
+    }
 }
