@@ -2,6 +2,7 @@ package App;
 
 import Bookster.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class App {
@@ -48,10 +49,19 @@ public class App {
 
         books[0].addAuthor(authors[1]);
 
+        Transaction[] transactions = {
+                new Transaction(books[0], clients[2], "2021-01-12", 2),
+                new Transaction(books[3], clients[1], "2021-02-03", 1),
+                new Transaction(books[4], clients[0], "2021-01-15", 5),
+                new Transaction(books[0], clients[4], "2021-01-23", 1),
+                new Transaction(books[2], clients[3], "2021-03-01", 10),
+        };
+
         Arrays.stream(authors).forEach(srv::register);
         Arrays.stream(publishers).forEach(srv::register);
         Arrays.stream(clients).forEach(srv::register);
         Arrays.stream(books).forEach(srv::register);
+        Arrays.stream(transactions).forEach(srv::register);
     }
 
     public static void main(String[] args) {
@@ -65,5 +75,7 @@ public class App {
         srv.clientStream().forEach(c -> System.out.println(c.getValue()));
         System.out.println("Books:");
         srv.bookStream().forEach(b -> System.out.println(b.getValue()));
+        System.out.println("Transactions:");
+        srv.transactionStream().forEach(t -> System.out.println(t.getValue()));
     }
 }
