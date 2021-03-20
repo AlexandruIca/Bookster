@@ -56,4 +56,21 @@ public final class Transaction implements Unique {
     public Long getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append('(')
+                .append(this.id)
+                .append(", ")
+                .append(this.book.toString())
+                .append(", ")
+                .append(this.client.toString())
+                .append(", ")
+                .append(this.quantity)
+                .append(", ")
+                .append(this.date)
+                .append(')')
+                .toString();
+    }
 }
