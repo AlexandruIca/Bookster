@@ -2,6 +2,7 @@ package App;
 
 import Bookster.Author;
 import Bookster.BookService;
+import Bookster.Client;
 import Bookster.Publisher;
 
 public class App {
@@ -21,6 +22,14 @@ public class App {
         srv.register(new Publisher("Schuster"));
         srv.register(new Publisher("Macmillan"));
         srv.register(new Publisher("Junimea"));
+
+        // clients
+        srv.register(new Client("Ema", "Ivan", "1952-04-06"));
+        srv.register(new Client("Beatrice", "Hall", "1975-08-07"));
+        srv.register(new Client("Barry", "Anderson", "1992-02-04"));
+        srv.register(new Client("Henry", "Craig", "1948-02-12"));
+        srv.register(new Client("Deann", "Alexander", "1984-01-03"));
+        srv.register(new Client("Glenda", "O'brien", "1976-10-19"));
     }
 
     public static void main(String[] args) {
@@ -30,5 +39,7 @@ public class App {
         srv.authorStream().forEach(a -> System.out.println(a.getValue()));
         System.out.println("Publishers:");
         srv.publisherStream().forEach(p -> System.out.println(p.getValue()));
+        System.out.println("Clients:");
+        srv.clientStream().forEach(c -> System.out.println(c.getValue()));
     }
 }
