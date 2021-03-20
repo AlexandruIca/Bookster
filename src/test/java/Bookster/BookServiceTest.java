@@ -12,4 +12,14 @@ public class BookServiceTest {
         assert srv.register(auth);
         assert !srv.register(auth);
     }
+
+    @Test
+    public void testRegisterPublisher() {
+        var srv = BookService.INSTANCE;
+        var publisher = new Publisher("Whatever");
+
+        assert srv.register(new Publisher("ABC"));
+        assert srv.register(publisher);
+        assert !srv.register(publisher);
+    }
 }
