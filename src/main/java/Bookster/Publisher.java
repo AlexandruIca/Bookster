@@ -35,4 +35,16 @@ public final class Publisher implements Unique {
     public Long getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        String s = new StringBuilder()
+                .append('(')
+                .append(this.id)
+                .append(", ")
+                .append(this.name)
+                .append(')')
+                .toString();
+        return s;
+    }
 }
