@@ -1,6 +1,6 @@
 package Bookster;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Vector;
 import java.util.stream.IntStream;
