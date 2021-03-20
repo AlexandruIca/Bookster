@@ -31,6 +31,13 @@ public enum BookService {
         return authors.entrySet().stream();
     }
 
+    /**
+     * @return handle to {@link #publishers}
+     */
+    public Stream<Map.Entry<Long, Publisher>> publisherStream() {
+        return publishers.entrySet().stream();
+    }
+
     private void addObject(Unique obj) throws Exception {
         if (obj instanceof Author) {
             authors.put(obj.getID(), (Author) obj);
