@@ -1,6 +1,6 @@
 package Bookster;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
@@ -56,6 +56,12 @@ public class AuthorTest {
         authors.parallelStream().forEach(author -> temp.add(new Author(author.getFirstName(),
                 author.getLastName(), "2010-10-07")));
         assert temp.size() == authors.size();
+    }
+
+    @Test
+    public void testAuthorToString() {
+        var temp = new Author("A", "B", "1934-12-12");
+        assert temp.toString().equals("(" + temp.getID() + ", A B, 1934-12-12)");
     }
 }
 

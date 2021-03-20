@@ -48,4 +48,20 @@ public final class Author implements Unique {
     public Long getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        String s = new StringBuilder()
+                .append('(')
+                .append(this.id)
+                .append(", ")
+                .append(this.firstName)
+                .append(' ')
+                .append(this.lastName)
+                .append(", ")
+                .append(this.dateBorn)
+                .append(')')
+                .toString();
+        return s;
+    }
 }
