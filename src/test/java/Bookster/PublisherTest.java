@@ -32,4 +32,10 @@ public class PublisherTest {
         names.parallelStream().forEach(name -> temp.add(new Publisher(name.getName())));
         assert temp.size() == names.size();
     }
+
+    @Test
+    public void testToString() {
+        var temp = new Publisher("XYZ");
+        assert temp.toString().equals("(" + temp.getID() + ", XYZ)");
+    }
 }
