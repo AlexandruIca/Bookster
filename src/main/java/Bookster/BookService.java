@@ -2,7 +2,6 @@ package Bookster;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 /**
@@ -26,30 +25,52 @@ public enum BookService {
     }
 
     /**
-     * @param author new author to add to the 'database'.
-     * @return true if {@code author} was added successfully, false otherwise.
-     * <p>
-     * 'false' may be returned if the author is already present, or if any exception
-     * occurs when trying to add the author to {@link #authors}.
-     */
-    public boolean registerAuthor(Author author) {
-        try {
-            if (authors.containsKey(author.getID())) {
-                return false;
-            }
-            authors.put(author.getID(), author);
-        } catch (Exception e) {
-            System.out.println("[BookService::registerAuthor] Exception caught: {}" + e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @return handle to {@link #authors}, giving you maximum flexibility.
      */
     public Stream<Map.Entry<Long, Author>> authorStream() {
         return authors.entrySet().stream();
+    }
+
+    private void addObject(Unique obj) throws Exception {
+        if (obj instanceof Author) {
+            authors.put(obj.getID(), (Author) obj);
+        } else if (obj instanceof Publisher) {
+            publishers.put(obj.getID(), (Publisher) obj);
+        } else {
+            throw new Exception("Tried to add an object that is not of any type from package " +
+                    "Bookster!");
+        }
+    }
+
+    private boolean checkIfObjectExists(Unique obj) throws Exception {
+        if (obj instanceof Author) {
+            return authors.containsKey(obj.getID());
+        } else if (obj instanceof Publisher) {
+            return publishers.containsKey(obj.getID());
+        } else {
+            throw new Exception("Tried to check for existence of an object that is not of any " +
+                    "type from package Bookster!");
+        }
+    }
+
+    /**
+     * @param object new object to add to the 'database'.
+     * @return true if {@code publisher} was added successfully, false otherwise.
+     * <p>
+     * 'false' may be returned if the object is already present, or if any exception
+     * occurs when trying to add the object to the 'database'.
+     */
+    public boolean register(Unique object) {
+        try {
+            if (checkIfObjectExists(object)) {
+                return false;
+            }
+            addObject(object);
+        } catch (Exception e) {
+            System.out.println("[BookService::register] Exception caught: {}" + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 }

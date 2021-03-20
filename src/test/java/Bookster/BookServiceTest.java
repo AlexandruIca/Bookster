@@ -8,8 +8,8 @@ public class BookServiceTest {
         var srv = BookService.INSTANCE;
         var auth = new Author("A", "B", "2000-01-01");
 
-        assert srv.registerAuthor(new Author("X", "Y", "1999-09-09"));
-        assert srv.registerAuthor(auth);
-        assert !srv.registerAuthor(auth);
+        assert srv.register(new Author("X", "Y", "1999-09-09"));
+        assert srv.register(auth);
+        assert !srv.register(auth);
     }
 }
