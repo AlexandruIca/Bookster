@@ -2,6 +2,7 @@ package App;
 
 import Bookster.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -52,7 +53,7 @@ public class App {
         Transaction[] transactions = {
                 new Transaction(books[0], clients[2], "2021-01-12", 2),
                 new Transaction(books[3], clients[1], "2021-02-03", 1),
-                new Transaction(books[4], clients[0], "2021-01-15", 5),
+                new Transaction(books[4], clients[0], "2021-01-12", 5),
                 new Transaction(books[0], clients[4], "2021-01-23", 1),
                 new Transaction(books[2], clients[3], "2021-03-01", 10),
         };
@@ -77,5 +78,8 @@ public class App {
         srv.bookStream().forEach(b -> System.out.println(b.getValue()));
         System.out.println("Transactions:");
         srv.transactionStream().forEach(t -> System.out.println(t.getValue()));
+
+        System.out.println("Transactions on 2021-01-12:");
+        System.out.println(srv.getTransactionsOnDate(LocalDate.parse("2021-01-12")).toString());
     }
 }
