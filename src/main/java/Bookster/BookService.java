@@ -1,9 +1,7 @@
 package Bookster;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,7 +10,7 @@ import java.util.stream.Stream;
  * <p>
  * This is a singleton implemented using an enum to assure thread safety. Also, it just
  * seems cleaner than any other solution I've seen.
- *
+ * <p>
  * Each member is a `HashMap` so that it can be efficient to check for the existence of an object.
  */
 public enum BookService {
@@ -137,5 +135,17 @@ public enum BookService {
         return this.transactionStream()
                 .filter(t -> t.getValue().getDate().isEqual(date))
                 .collect(Collectors.toList());
+    }
+
+    public List<Book> getBooksByReview() {
+        final var reviews = this.reviewStream().sorted(new Comparator<Map.Entry<Long, BookReview>>() {
+            @Override
+            public int compare(Map.Entry<Long, BookReview> longBookReviewEntry, Map.Entry<Long,
+                    BookReview> t1) {
+                return t1.getValue().getNumStars() - longBookReviewEntry.getValue().getNumStars();
+            }
+        }).collect(Collectors.toList());
+
+        return reviews.stream().map(r -> r.getValue().getBook()).collect(Collectors.toList());
     }
 }

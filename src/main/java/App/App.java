@@ -92,5 +92,7 @@ public class App {
 
         System.out.println("Transactions on 2021-01-12:");
         System.out.println(srv.getTransactionsOnDate(LocalDate.parse("2021-01-12")).toString());
+        System.out.println("Books by review:");
+        System.out.println(srv.getBooksByReview().toString());
     }
 }
