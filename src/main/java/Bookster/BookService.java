@@ -1,15 +1,17 @@
 package Bookster;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * Implements all actions that can be performed in the entire app.
  * <p>
  * This is a singleton implemented using an enum to assure thread safety. Also, it just
- * seems
- * cleaner than any other solution I've seen
+ * seems cleaner than any other solution I've seen.
  */
 public enum BookService {
     INSTANCE();
@@ -115,5 +117,11 @@ public enum BookService {
         }
 
         return true;
+    }
+
+    public List<Map.Entry<Long, Transaction>> getTransactionsOnDate(LocalDate date) {
+        return this.transactionStream()
+                .filter(t -> t.getValue().getDate().isEqual(date))
+                .collect(Collectors.toList());
     }
 }
