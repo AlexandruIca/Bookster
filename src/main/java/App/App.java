@@ -58,11 +58,20 @@ public class App {
                 new Transaction(books[2], clients[3], "2021-03-01", 10),
         };
 
+        BookReview[] reviews = {
+                new BookReview(books[0], clients[3], "Review.", 4),
+                new BookReview(books[2], clients[1], "Review.", 2),
+                new BookReview(books[4], clients[2], "Review.", 3),
+                new BookReview(books[1], clients[1], "Review.", 1),
+                new BookReview(books[3], clients[4], "Review.", 3),
+        };
+
         Arrays.stream(authors).forEach(srv::register);
         Arrays.stream(publishers).forEach(srv::register);
         Arrays.stream(clients).forEach(srv::register);
         Arrays.stream(books).forEach(srv::register);
         Arrays.stream(transactions).forEach(srv::register);
+        Arrays.stream(reviews).forEach(srv::register);
     }
 
     public static void main(String[] args) {
@@ -78,6 +87,8 @@ public class App {
         srv.bookStream().forEach(b -> System.out.println(b.getValue()));
         System.out.println("Transactions:");
         srv.transactionStream().forEach(t -> System.out.println(t.getValue()));
+        System.out.println("Reviews:");
+        srv.reviewStream().forEach(r -> System.out.println(r.getValue()));
 
         System.out.println("Transactions on 2021-01-12:");
         System.out.println(srv.getTransactionsOnDate(LocalDate.parse("2021-01-12")).toString());
