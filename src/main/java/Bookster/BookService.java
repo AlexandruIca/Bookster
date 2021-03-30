@@ -12,6 +12,8 @@ import java.util.stream.Stream;
  * <p>
  * This is a singleton implemented using an enum to assure thread safety. Also, it just
  * seems cleaner than any other solution I've seen.
+ *
+ * Each member is a `HashMap` so that it can be efficient to check for the existence of an object.
  */
 public enum BookService {
     INSTANCE();
@@ -21,6 +23,7 @@ public enum BookService {
     private HashMap<Long, Client> clients = new HashMap<>();
     private HashMap<Long, Book> books = new HashMap<>();
     private HashMap<Long, Transaction> transactions = new HashMap<>();
+    private HashMap<Long, BookReview> reviews = new HashMap<>();
 
     private BookService() {
     }
@@ -64,6 +67,13 @@ public enum BookService {
         return transactions.entrySet().stream();
     }
 
+    /**
+     * @return handle to {@link #reviews}
+     */
+    public Stream<Map.Entry<Long, BookReview>> reviewStream() {
+        return reviews.entrySet().stream();
+    }
+
     private void addObject(Unique obj) throws Exception {
         if (obj instanceof Author) {
             authors.put(obj.getID(), (Author) obj);
@@ -75,6 +85,8 @@ public enum BookService {
             books.put(obj.getID(), (Book) obj);
         } else if (obj instanceof Transaction) {
             transactions.put(obj.getID(), (Transaction) obj);
+        } else if (obj instanceof BookReview) {
+            reviews.put(obj.getID(), (BookReview) obj);
         } else {
             throw new Exception("Tried to add an object that is not of any type from package " +
                     "Bookster!");
@@ -92,6 +104,8 @@ public enum BookService {
             return books.containsKey(obj.getID());
         } else if (obj instanceof Transaction) {
             return transactions.containsKey(obj.getID());
+        } else if (obj instanceof BookReview) {
+            return reviews.containsKey(obj.getID());
         } else {
             throw new Exception("Tried to check for existence of an object that is not of any " +
                     "type from package Bookster!");
