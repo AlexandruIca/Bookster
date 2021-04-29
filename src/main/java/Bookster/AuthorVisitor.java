@@ -2,7 +2,7 @@ package Bookster;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class AuthorVisitor {
+public class AuthorVisitor implements Visitor<Author> {
     public String getFirstName() {
         return firstName;
     }
@@ -23,4 +23,9 @@ public class AuthorVisitor {
 
     @CsvBindByName(column="dateBorn", required=true)
     private String dateBorn;
+
+    @Override
+    public Author convert() {
+        return new Author(firstName, lastName, dateBorn);
+    }
 }
