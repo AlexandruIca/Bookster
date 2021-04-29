@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 public class App {
     private static void populate(BookService srv) {
@@ -77,23 +76,24 @@ public class App {
         Arrays.stream(reviews).forEach(srv::register);
     }
 
+    private static <T extends Visitor> void register(String filePath, BookService srv,
+                                                     Class<T> rtti) {
+        try {
+            URL resource = App.class.getClassLoader().getResource(filePath);
+            var data = new CsvToBeanBuilder<T>(new FileReader(resource.getFile()))
+                    .withType(rtti).build().parse();
+            data.stream().forEach(v -> srv.register(v.convert()));
+        } catch (Exception e) {
+            System.out.println("Failed reading CSV(" + filePath + "): " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         BookService srv = BookService.INSTANCE;
-        populate(srv);
-
-        try {
-            URL resource = App.class.getClassLoader().getResource("authors.csv");
-            List<AuthorVisitor> data =
-                    new CsvToBeanBuilder<AuthorVisitor>(new FileReader(resource.getFile()))
-                    .withType(AuthorVisitor.class).build().parse();
-
-            System.out.printf("Parsed by opencsv: " + data);
-
-            data.stream().forEach(v -> srv.register(new Author(v.getFirstName(), v.getLastName(),
-                    v.getDateBorn())));
-        } catch (Exception e) {
-            System.out.println("Failed reading CSV: " + e.getMessage());
-        }
+        //populate(srv);
+        register("authors.csv", srv, AuthorVisitor.class);
+        register("publishers.csv", srv, PublisherVisitor.class);
+        register("clients.csv", srv, ClientVisitor.class);
 
         System.out.println("Authors:");
         srv.authorStream().forEach(a -> System.out.println(a.getValue()));
