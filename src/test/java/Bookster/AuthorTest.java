@@ -1,11 +1,10 @@
 package Bookster;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class AuthorTest {
     private static final ArrayList<String> firstNames = new ArrayList<>();
@@ -35,11 +34,8 @@ public class AuthorTest {
         var random = new Random();
 
         for (final var name : firstNames) {
-            authors.add(new Author(
-                    name,
-                    lastNames.get(random.nextInt(lastNames.size())),
-                    "1978-11-04"
-            ));
+            authors.add(
+                new Author(name, lastNames.get(random.nextInt(lastNames.size())), "1978-11-04"));
         }
     }
 
@@ -53,8 +49,8 @@ public class AuthorTest {
     @Test
     public void testThreadSafety() {
         var temp = new Vector<Author>();
-        authors.parallelStream().forEach(author -> temp.add(new Author(author.getFirstName(),
-                author.getLastName(), "2010-10-07")));
+        authors.parallelStream().forEach(author
+            -> temp.add(new Author(author.getFirstName(), author.getLastName(), "2010-10-07")));
         assert temp.size() == authors.size();
     }
 
