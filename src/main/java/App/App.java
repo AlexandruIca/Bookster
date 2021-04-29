@@ -1,10 +1,13 @@
 package App;
 
 import Bookster.*;
+import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.FileReader;
+import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class App {
     private static void populate(BookService srv) {
@@ -38,12 +41,12 @@ public class App {
         Book[] books = {
                 new Book("Forge of the Heart", BookGenre.CRIME, 11.99, "1986-04-23", authors[0],
                         publishers[0]),
-                new Book("The Ghost in the West", BookGenre.TRAVEL, 9.99, "2017-07-07",
-                        authors[3], publishers[2]),
-                new Book("Crimson Leviathan", BookGenre.ACTION, 39.99, "2016-11-08",
-                        authors[4], publishers[1]),
-                new Book("Male Delivery", BookGenre.BIOGRAPHY, 93.99, "2002-04-02",
-                        authors[2], publishers[3]),
+                new Book("The Ghost in the West", BookGenre.TRAVEL, 9.99, "2017-07-07", authors[3],
+                        publishers[2]),
+                new Book("Crimson Leviathan", BookGenre.ACTION, 39.99, "2016-11-08", authors[4],
+                        publishers[1]),
+                new Book("Male Delivery", BookGenre.BIOGRAPHY, 93.99, "2002-04-02", authors[2],
+                        publishers[3]),
                 new Book("Clue of the Crooked Puppet", BookGenre.BUSINESS, 54.99, "2009-10-13",
                         authors[3], publishers[3]),
         };
@@ -77,6 +80,21 @@ public class App {
     public static void main(String[] args) {
         BookService srv = BookService.INSTANCE;
         populate(srv);
+
+        try {
+            URL resource = App.class.getClassLoader().getResource("authors.csv");
+            List<AuthorVisitor> data =
+                    new CsvToBeanBuilder<AuthorVisitor>(new FileReader(resource.getFile()))
+                    .withType(AuthorVisitor.class).build().parse();
+
+            System.out.printf("Parsed by opencsv: " + data);
+
+            data.stream().forEach(v -> srv.register(new Author(v.getFirstName(), v.getLastName(),
+                    v.getDateBorn())));
+        } catch (Exception e) {
+            System.out.println("Failed reading CSV: " + e.getMessage());
+        }
+
         System.out.println("Authors:");
         srv.authorStream().forEach(a -> System.out.println(a.getValue()));
         System.out.println("Publishers:");
