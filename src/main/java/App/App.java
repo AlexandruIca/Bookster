@@ -1,10 +1,7 @@
 package App;
 
 import Bookster.*;
-import com.opencsv.bean.CsvToBeanBuilder;
 
-import java.io.FileReader;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -76,24 +73,13 @@ public class App {
         Arrays.stream(reviews).forEach(srv::register);
     }
 
-    private static <T extends Visitor> void register(String filePath, BookService srv,
-                                                     Class<T> rtti) {
-        try {
-            URL resource = App.class.getClassLoader().getResource(filePath);
-            var data = new CsvToBeanBuilder<T>(new FileReader(resource.getFile()))
-                    .withType(rtti).build().parse();
-            data.stream().forEach(v -> srv.register(v.convert()));
-        } catch (Exception e) {
-            System.out.println("Failed reading CSV(" + filePath + "): " + e.getMessage());
-        }
-    }
-
     public static void main(String[] args) {
-        BookService srv = BookService.INSTANCE;
+        var csv = CSVService.INSTANCE;
+        var srv = BookService.INSTANCE;
         //populate(srv);
-        register("authors.csv", srv, AuthorVisitor.class);
-        register("publishers.csv", srv, PublisherVisitor.class);
-        register("clients.csv", srv, ClientVisitor.class);
+        csv.register("authors.csv", srv, AuthorVisitor.class);
+        csv.register("publishers.csv", srv, PublisherVisitor.class);
+        csv.register("clients.csv", srv, ClientVisitor.class);
 
         System.out.println("Authors:");
         srv.authorStream().forEach(a -> System.out.println(a.getValue()));
@@ -112,5 +98,7 @@ public class App {
         System.out.println(srv.getTransactionsOnDate(LocalDate.parse("2021-01-12")).toString());
         System.out.println("Books by review:");
         System.out.println(srv.getBooksByReview().toString());
+
+        csv.shutdown();
     }
 }

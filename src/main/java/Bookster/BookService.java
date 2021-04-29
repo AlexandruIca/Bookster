@@ -34,6 +34,7 @@ public enum BookService {
      * @return handle to {@link #authors}, giving you maximum flexibility.
      */
     public Stream<Map.Entry<Long, Author>> authorStream() {
+        CSVService.INSTANCE.logAction("Accessed authors' stream");
         return authors.entrySet().stream();
     }
 
@@ -41,6 +42,7 @@ public enum BookService {
      * @return handle to {@link #publishers}
      */
     public Stream<Map.Entry<Long, Publisher>> publisherStream() {
+        CSVService.INSTANCE.logAction("Accessed publishers' stream");
         return publishers.entrySet().stream();
     }
 
@@ -48,6 +50,7 @@ public enum BookService {
      * @return handle to {@link #clients}
      */
     public Stream<Map.Entry<Long, Client>> clientStream() {
+        CSVService.INSTANCE.logAction("Accessed clients' stream");
         return clients.entrySet().stream();
     }
 
@@ -55,6 +58,7 @@ public enum BookService {
      * @return handle to {@link #books}
      */
     public Stream<Map.Entry<Long, Book>> bookStream() {
+        CSVService.INSTANCE.logAction("Accessed books' stream");
         return books.entrySet().stream();
     }
 
@@ -62,6 +66,7 @@ public enum BookService {
      * @return handle to {@link #transactions}
      */
     public Stream<Map.Entry<Long, Transaction>> transactionStream() {
+        CSVService.INSTANCE.logAction("Accessed transactions' stream");
         return transactions.entrySet().stream();
     }
 
@@ -69,23 +74,31 @@ public enum BookService {
      * @return handle to {@link #reviews}
      */
     public Stream<Map.Entry<Long, BookReview>> reviewStream() {
+        CSVService.INSTANCE.logAction("Accessed reviews' stream");
         return reviews.entrySet().stream();
     }
 
     private void addObject(Unique obj) throws Exception {
         if (obj instanceof Author) {
             authors.put(obj.getID(), (Author) obj);
+            CSVService.INSTANCE.logAction("Registered author");
         } else if (obj instanceof Publisher) {
             publishers.put(obj.getID(), (Publisher) obj);
+            CSVService.INSTANCE.logAction("Registered publisher");
         } else if (obj instanceof Client) {
             clients.put(obj.getID(), (Client) obj);
+            CSVService.INSTANCE.logAction("Registered client");
         } else if (obj instanceof Book) {
             books.put(obj.getID(), (Book) obj);
+            CSVService.INSTANCE.logAction("Registered book");
         } else if (obj instanceof Transaction) {
             transactions.put(obj.getID(), (Transaction) obj);
+            CSVService.INSTANCE.logAction("Registered transaction");
         } else if (obj instanceof BookReview) {
             reviews.put(obj.getID(), (BookReview) obj);
+            CSVService.INSTANCE.logAction("Registered review");
         } else {
+            CSVService.INSTANCE.logAction("Invalid registration request");
             throw new Exception("Tried to add an object that is not of any type from package " +
                     "Bookster!");
         }
@@ -132,12 +145,14 @@ public enum BookService {
     }
 
     public List<Map.Entry<Long, Transaction>> getTransactionsOnDate(LocalDate date) {
+        CSVService.INSTANCE.logAction("Transaction on date");
         return this.transactionStream()
                 .filter(t -> t.getValue().getDate().isEqual(date))
                 .collect(Collectors.toList());
     }
 
     public List<Book> getBooksByReview() {
+        CSVService.INSTANCE.logAction("Books by review");
         final var reviews = this.reviewStream().sorted(new Comparator<Map.Entry<Long, BookReview>>() {
             @Override
             public int compare(Map.Entry<Long, BookReview> longBookReviewEntry, Map.Entry<Long,
